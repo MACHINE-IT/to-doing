@@ -50,7 +50,7 @@ export default class Register extends React.Component {
                             type="text"
                             name="username"
                             placeholder="User Name"
-                            value={this.state.username}
+                            value={this.state.username.toLowerCase}
                             onChange={this.onUserNameChangeHandler}
                         />
                     </div>
@@ -59,7 +59,7 @@ export default class Register extends React.Component {
                             type="email"
                             name="email"
                             placeholder="Email"
-                            value={this.state.email}
+                            value={this.state.email.toLowerCase}
                             onChange={this.onEmailChangeHandler}
                         />
                     </div>
@@ -78,7 +78,8 @@ export default class Register extends React.Component {
                             <label>I agree to the Terms and Conditions</label>
                         </div>
                     </div>
-                    <button class="ui button centered-button" type="submit">Register</button>
+                    <button class="ui button centered" type="submit">Register</button>
+                    <button class="ui button centered login-google-button" type="submit">Sign In With Google</button>
                 </form>
             </div >
         );

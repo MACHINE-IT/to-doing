@@ -1,6 +1,10 @@
-.App {
-  text-align: center;
+body {
+  background-image: url("../resources/todo-background-image.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+
+.App {}
 
 .container {
   display: flex !important;
@@ -14,7 +18,7 @@
   padding: 20px;
 }
 
-.container > form {
+.container>form {
   border: 1px solid lightgrey;
   border-radius: 5px;
   background: #fff;
@@ -29,18 +33,32 @@ pre {
 }
 
 p {
-  color: red;
+  color: rgb(19, 102, 153);
 }
 
 button {
-  background: lightgray !important;
-  margin-top: 30px !important; 
-  
+  margin-top: 30px !important;
+  color: white !important;
 }
 
-button.centered-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.login-heading {
+  color: rgb(19, 102, 153);
+  margin-bottom: 80px;
+}
+
+.login-button {
+  background: rgb(19, 102, 153) !important;
+}
+
+button.ui.button.centered.login-google-button {
+  background: none !important;
+  color: rgb(19, 102, 153) !important;
+  border: 1px solid rgb(19, 102, 153) !important;
 }
