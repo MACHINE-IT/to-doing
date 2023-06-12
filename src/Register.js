@@ -20,8 +20,7 @@ export default class Register extends React.Component {
         this.state = {
             username: "",
             email: "",
-            password: "",
-            isChecked: false
+            password: ""
         };
     }
 
@@ -35,10 +34,6 @@ export default class Register extends React.Component {
     onPasswordChangeHandler = (e) => {
         this.setState({ password: e.target.value });
     };
-
-    checkboxCheckHandler = (e) => {
-        this.setState({ isChecked: e.target.checked })
-    }
 
     render() {
         return (
@@ -78,13 +73,9 @@ export default class Register extends React.Component {
                             onChange={this.onPasswordChangeHandler}
                         />
                     </div>
-                    <div class="field">
-                        <div class="ui checkbox">
-                            <input type="checkbox" name="checkbox" checked={this.state.isChecked} onChange={this.checkboxCheckHandler} />
-                            <label>I agree to the Terms and Conditions</label>
-                        </div>
-                    </div>
+
                     <button class="ui button centered login-signup-button" type="submit">Register</button>
+                    <p className="terms-and-conditions">By creating an account, you are agreeing to our &nbsp;<Link to="/terms-of-service" target="_blank">Terms of Service</Link>&nbsp;and&nbsp;<Link to="/privacy-policy" target="_blank">Privacy Policy</Link></p>
                     <button class="ui button centered login-google-button" type="submit">Sign Up With Google</button>
                     <p className="signUpFormLogin centered">Already have an account? &nbsp; <Link to="/login">Login</Link> </p>
                 </form>

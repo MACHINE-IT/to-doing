@@ -43,6 +43,7 @@ export default class Login extends React.Component {
                         </div>
                     </div>
                     <button class="ui button centered login-signup-button" type="submit">SIGN IN</button>
+                    <p className="forgot-password centered"><Link to="/password-reset">Forgot Password ?</Link></p>
                     <button class="ui button centered login-google-button" type="submit">Sign In With Google</button>
                     <p className="signUpFromLogin centered">Don't have an account? &nbsp; <Link to="/register"> Sign Up</Link></p>
                 </form>

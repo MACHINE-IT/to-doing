@@ -12,7 +12,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  max-width: 500px;
+  max-width: 550px;
   width: 100%;
   margin: auto;
   padding: 20px;
@@ -58,6 +58,10 @@ button {
   background: rgb(19, 102, 153) !important;
 }
 
+.password-reset-button {
+  background: rgb(19, 102, 153) !important;
+}
+
 button.ui.button.centered.login-google-button {
   background: none !important;
   color: rgb(19, 102, 153) !important;
@@ -66,4 +70,13 @@ button.ui.button.centered.login-google-button {
 
 .register-heading {
   margin-bottom: 40px;
+}
+
+.terms-and-conditions {
+  text-align: center;
+  color: rgb(57, 90, 110)
+}
+
+.privacy-terms-text {
+  color: black;
 }

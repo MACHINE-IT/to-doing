@@ -1,5 +1,7 @@
 import Register from "./Register.js";
 import Login from "./Login.js"
+import PasswordReset from "./PasswordReset.js";
+import TermsAndConditions from "./TermsAndConditions.js";
 import { userForm } from "react-hook-form";
 import { Route, Routes } from "react-router-dom"
 import "./App.css";
@@ -11,8 +13,11 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/login" Component={Login} />
-        <Route path="/register" Component={Register} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/password-reset" element={<PasswordReset />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/terms-of-service" element={<TermsAndConditions />} />
+        <Route path="/privacy-policy" element={<TermsAndConditions />} />
       </Routes>
     </div>
 
