@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./App.css";
 //import { useState, useRef, useEffect } from "react";
 import {
@@ -7,6 +8,7 @@ import {
     faInfoCircle,
 } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import 'react-bootstrap';
 
 const userName_REGEX = /^[A-Za-z][0-9-_]{3,23}/;
 const pwd_REGEX =
@@ -24,11 +26,11 @@ export default class Register extends React.Component {
     }
 
     onUserNameChangeHandler = (e) => {
-        this.setState({ username: e.target.value });
+        this.setState({ username: e.target.value.toLowerCase() });
     };
 
     onEmailChangeHandler = (e) => {
-        this.setState({ email: e.target.value });
+        this.setState({ email: e.target.value.toLowerCase() });
     };
     onPasswordChangeHandler = (e) => {
         this.setState({ password: e.target.value });
@@ -41,6 +43,10 @@ export default class Register extends React.Component {
     render() {
         return (
             <div className="container">
+                <div className="register-heading">
+                    <h1>Get Started</h1>
+                    <p>Create your account now and start ToDoing!</p>
+                </div>
                 <form className="ui form" onSubmit={(e) => {
                     e.preventDefault();
                 }
@@ -50,7 +56,7 @@ export default class Register extends React.Component {
                             type="text"
                             name="username"
                             placeholder="User Name"
-                            value={this.state.username.toLowerCase}
+                            value={this.state.username}
                             onChange={this.onUserNameChangeHandler}
                         />
                     </div>
@@ -59,7 +65,7 @@ export default class Register extends React.Component {
                             type="email"
                             name="email"
                             placeholder="Email"
-                            value={this.state.email.toLowerCase}
+                            value={this.state.email}
                             onChange={this.onEmailChangeHandler}
                         />
                     </div>
@@ -78,8 +84,9 @@ export default class Register extends React.Component {
                             <label>I agree to the Terms and Conditions</label>
                         </div>
                     </div>
-                    <button class="ui button centered" type="submit">Register</button>
-                    <button class="ui button centered login-google-button" type="submit">Sign In With Google</button>
+                    <button class="ui button centered login-signup-button" type="submit">Register</button>
+                    <button class="ui button centered login-google-button" type="submit">Sign Up With Google</button>
+                    <p className="signUpFormLogin centered">Already have an account? &nbsp; <Link to="/login">Login</Link> </p>
                 </form>
             </div >
         );

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"
 import "./App.css"
 
 export default class Login extends React.Component {
@@ -11,7 +12,7 @@ export default class Login extends React.Component {
         };
     }
     usernameEmailChangeHandler = (e) => {
-        this.setState({ usernameEmail: e.target.value })
+        this.setState({ usernameEmail: e.target.value.toLowerCase() })
     }
 
     passwordChangeHandler = (e) => {
@@ -24,7 +25,7 @@ export default class Login extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <h1 className="login-heading">Sign in and start ToDoing</h1>
                 <form className="ui form" onSubmit={(e) => {
                     e.preventDefault();
@@ -41,9 +42,9 @@ export default class Login extends React.Component {
                             <label>Remember Me</label>
                         </div>
                     </div>
-                    <button class="ui button centered login-button" type="submit">SIGN IN</button>
+                    <button class="ui button centered login-signup-button" type="submit">SIGN IN</button>
                     <button class="ui button centered login-google-button" type="submit">Sign In With Google</button>
-                    <p className="signUpFromLogin centered">Don't have an account? Sign Up</p>
+                    <p className="signUpFromLogin centered">Don't have an account? &nbsp; <Link to="/register"> Sign Up</Link></p>
                 </form>
             </div>
         )

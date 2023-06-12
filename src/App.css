@@ -19,9 +19,9 @@ body {
 }
 
 .container>form {
-  border: 1px solid lightgrey;
+  /* border: 1px solid lightgrey;
   border-radius: 5px;
-  background: #fff;
+  background: #fff; */
   padding: 20px;
   width: 70%;
 }
@@ -46,6 +46,7 @@ button {
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin: auto;
 }
 
 .login-heading {
@@ -53,7 +54,7 @@ button {
   margin-bottom: 80px;
 }
 
-.login-button {
+.login-signup-button {
   background: rgb(19, 102, 153) !important;
 }
 
@@ -61,4 +62,8 @@ button.ui.button.centered.login-google-button {
   background: none !important;
   color: rgb(19, 102, 153) !important;
   border: 1px solid rgb(19, 102, 153) !important;
+}
+
+.register-heading {
+  margin-bottom: 40px;
 }
