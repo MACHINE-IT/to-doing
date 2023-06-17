@@ -1,5 +1,5 @@
 import Register from "./Register.js";
-import Login from "./Login.js"
+import Login from "./Login.jsx"
 import PasswordReset from "./PasswordReset.js";
 import TermsAndConditions from "./TermsAndConditions.js";
 import { userForm } from "react-hook-form";

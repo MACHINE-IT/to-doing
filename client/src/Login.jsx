@@ -36,7 +36,7 @@ export default class Login extends React.Component {
                     <div className="field">
                         <input type="password" name="password" value={this.state.password} onChange={this.passwordChangeHandler} placeholder="Password" />
                     </div>
-                    <div class="field">
+                    <div className="field">
                         <div class="ui checkbox">
                             <input type="checkbox" name="rememberMe" isChecked={this.state.rememberMeCheck} onChange={this.rememberMeCheckHandler} />
                             <label>Remember Me</label>

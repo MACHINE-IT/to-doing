@@ -48,6 +48,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 //        UserSignInRequest requestBody = objectMapper.readValue(request.getInputStream(), UserSignInRequest.class);
 //        String usernameOrEmail = requestBody.getEmailOrUsername();
 //        String password = requestBody.getPassword();
+        // abra kadabra
 
         String token = extractToken(request);
         if(token == null) {
