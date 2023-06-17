@@ -1,3 +1,4 @@
+import MainUserDashboardAccount from "./MainUserDashboardAccount"
 import Register from "./Register.js";
 import Login from "./Login.js"
 import PasswordReset from "./PasswordReset.js";
@@ -13,6 +14,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
+        <Route path="/" element={<MainUserDashboardAccount />} />
         <Route path="/login" element={<Login />} />
         <Route path="/password-reset" element={<PasswordReset />} />
         <Route path="/register" element={<Register />} />
