@@ -5,7 +5,6 @@ import com.example.model.Category;
 import com.example.model.Priority;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,6 +34,5 @@ public class TaskUpdateRequest {
 
     private Category category;
 
-    @NotNull(message = "please provide the valid userId to update")
     private long userId;
 }

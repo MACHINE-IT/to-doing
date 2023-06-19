@@ -15,7 +15,9 @@ public interface AuthService {
 
     public void authenticate();
 
-    public void forgotPassword();
+    public void forgotPassword(String email);
 
     public void forgotUsername();
+
+
 }

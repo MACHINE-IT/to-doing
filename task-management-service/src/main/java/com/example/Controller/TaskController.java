@@ -2,6 +2,7 @@ package com.example.Controller;
 
 import com.example.config.RestEndpoints;
 import com.example.request.TaskRequest;
+import com.example.request.TaskUpdateRequest;
 import com.example.response.TaskResponse;
 import com.example.service.TaskService;
 import jakarta.validation.Valid;
@@ -29,9 +30,17 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).body(taskResponse);
     }
 
-    @DeleteMapping("/{taskId}")
+    @DeleteMapping(RestEndpoints.DELETE_TASK)
     public ResponseEntity<?> deleteTaskById(@PathVariable long taskId) {
         taskService.deleteTask(taskId);
         return ResponseEntity.ok().body("task has been deleted successfully");
     }
+
+    @PutMapping(RestEndpoints.UPDATE_TASK)
+    public ResponseEntity<?> updateTaskById(@RequestBody TaskUpdateRequest taskUpdateRequest) {
+        TaskResponse taskResponse = taskService.updateTask(taskUpdateRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(taskResponse);
+    }
+
+
 }

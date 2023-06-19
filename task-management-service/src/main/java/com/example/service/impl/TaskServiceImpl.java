@@ -61,8 +61,7 @@ public class TaskServiceImpl implements TaskService {
 //                .orElseThrow(() -> new NoSuchElementException("No task found with give task id"));
         Task updatedTask = modelMapper.map(taskUpdateRequest, Task.class);
         Task savedTask = taskRepository.save(updatedTask);
-        TaskResponse updatedTaskResponse = modelMapper.map(updatedTask, TaskResponse.class);
-        return updatedTaskResponse;
+        return modelMapper.map(savedTask, TaskResponse.class);
     }
 
     @Override

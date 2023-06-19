@@ -99,7 +99,12 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void forgotPassword() {
+    public void forgotPassword(String email) {
+        if(!userRepository.existsByEmail(email)) {
+            throw new IllegalArgumentException("given email is not registered with us");
+        }
+
+
 
     }
 

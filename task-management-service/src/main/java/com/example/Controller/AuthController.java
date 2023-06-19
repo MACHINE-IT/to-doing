@@ -42,4 +42,10 @@ public class AuthController {
     public void signOut() {
 
     }
+
+    @GetMapping(RestEndpoints.RESET_PASSWORD)
+    public ResponseEntity<?> resetPassword(String email) {
+
+        return null;
+    }
 }

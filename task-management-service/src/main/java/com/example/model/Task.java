@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,4 +37,7 @@ public class Task {
 //    @JoinColumn(name = "user_id", referencedColumnName = "userId")
     @Column(name = "user_id")
     private long userId;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
 }

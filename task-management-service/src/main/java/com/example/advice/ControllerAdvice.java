@@ -87,6 +87,7 @@ import javax.naming.AuthenticationException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 @ComponentScan("com.example")
@@ -137,6 +138,12 @@ public class ControllerAdvice {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> exceptionHandler(IllegalArgumentException exception) {
+        logger.error("Handling Exception: {}", exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<String> noSuchElementExceptionHandler(NoSuchElementException exception) {
         logger.error("Handling Exception: {}", exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
