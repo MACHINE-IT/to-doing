@@ -1,10 +1,8 @@
 package com.example.filters;
 
 import com.example.model.User;
-import com.example.request.UserSignInRequest;
 import com.example.utils.JwtAuthenticationProvider;
 import com.example.utils.JwtService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,16 +11,13 @@ import jakarta.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.security.SignatureException;
 
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
@@ -44,17 +39,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response,
                                     @NotNull FilterChain filterChain) throws ServletException, IOException {
         logger.info("inside do Filter method");
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        UserSignInRequest requestBody = objectMapper.readValue(request.getInputStream(), UserSignInRequest.class);
-//        String usernameOrEmail = requestBody.getEmailOrUsername();
-//        String password = requestBody.getPassword();
-        // abra kadabra
 
         String token = extractToken(request);
         if(token == null) {
             filterChain.doFilter(request, response);
-            
-
             return;
         }
         String username = jwtService.extractUsername(token);
@@ -62,7 +50,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 .username(username)
                 .build();
         if(!jwtService.validateToken(token, user)) {
-//            throw new BadCredentialsException("token is expired or invalid");
             filterChain.doFilter(request, response);
         }
         if(!checkAuthentication(username)) {
@@ -83,13 +70,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         } else {
             token = header;
         }
-
         return token;
     }
 
     private void setAuthentication(String username) {
         User user = jwtAuthenticationProvider.emailOrUsernameLookUp(username);
-//        if(user.getPassword().equals())
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
         Authentication authenticated = jwtAuthenticationProvider.authenticate(authentication);
         SecurityContextHolder.getContext().setAuthentication(authenticated);

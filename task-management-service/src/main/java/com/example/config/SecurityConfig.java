@@ -2,10 +2,15 @@ package com.example.config;
 
 import com.example.exceptions.JwtAuthenticationException;
 import com.example.filters.JwtAuthorizationFilter;
+import com.example.service.ResetPasswordTokenService;
+import com.example.service.impl.ResetPasswordTokenServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,10 +20,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.Properties;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final String[] allowedUrls = {"/api/auth/*", "/test", "/v3/api-docs/**", "/swagger-ui/**"};
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
     private final JwtAuthenticationException jwtAuthenticationException;
@@ -34,15 +42,13 @@ public class SecurityConfig {
     public SecurityFilterChain config(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests((authorize) -> {
-                    authorize.requestMatchers("/api/auth/*").permitAll()
-                            .requestMatchers("/api/tasks/*").fullyAuthenticated()
-                            .requestMatchers("/api/users/*").fullyAuthenticated();
+                    authorize.requestMatchers(allowedUrls).permitAll()
+                            .anyRequest().authenticated();
                 })
 //                auth -> auth.loginPage("/signing").defaultSuccessUrl("/home")
-//                .oauth2Login(Customizer.withDefaults())
+                .oauth2Login(Customizer.withDefaults())
                 .exceptionHandling(exceptionHandling -> {
                     exceptionHandling.authenticationEntryPoint(jwtAuthenticationException);
                 })
@@ -55,8 +61,40 @@ public class SecurityConfig {
     }
 
     @Bean
+    public SimpleMailMessage simpleMailMessage() {
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+         simpleMailMessage.setFrom("sandeepgfgjava@gmail.com");
+         return simpleMailMessage;
+    }
+
+    @Bean
+    public JavaMailSender getJavaMailSender() {
+
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+
+        mailSender.setUsername("sandeepgfgjava@gmail.com");
+        mailSender.setPassword("hmadfrmfqafxjuov");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.debug", "true");
+        return mailSender;
+    }
+
+
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public ResetPasswordTokenService resetPasswordTokenService() {
+        return new ResetPasswordTokenServiceImpl();
+    }
+
 
 }

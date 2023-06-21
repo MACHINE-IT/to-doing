@@ -5,6 +5,8 @@ import com.example.repository.UserRepository;
 import com.example.request.UserRegisterRequest;
 import com.example.request.UserSignInRequest;
 import com.example.service.AuthService;
+import com.example.service.MailService;
+import com.example.service.ResetPasswordTokenService;
 import com.example.utils.CustomAuthenticationProvider;
 import com.example.utils.JwtService;
 import com.example.validations.ValidEmailOrUsernameValidator;
@@ -15,8 +17,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriBuilder;
+import org.springframework.web.util.UriBuilderFactory;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.sql.SQLException;
+import java.util.Optional;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -28,17 +34,21 @@ public class AuthServiceImpl implements AuthService {
     private final CustomAuthenticationProvider customAuthenticationProvider;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final MailService mailService;
+
+    private final ResetPasswordTokenService resetPasswordTokenService;
 
     @Autowired
     public AuthServiceImpl(JwtService jwtService, ValidEmailOrUsernameValidator validator, PasswordEncoder passwordEncoder, CustomAuthenticationProvider customAuthenticationProvider,
-                           UserRepository userRepository, ModelMapper modelMapper) {
+                           UserRepository userRepository, ModelMapper modelMapper, MailServiceImpl mailService, ResetPasswordTokenServiceImpl resetPasswordTokenService) {
         this.jwtService = jwtService;
         this.validator = validator;
         this.passwordEncoder = passwordEncoder;
         this.customAuthenticationProvider = customAuthenticationProvider;
-
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.mailService = mailService;
+        this.resetPasswordTokenService = resetPasswordTokenService;
     }
 
     @Override
@@ -77,6 +87,7 @@ public class AuthServiceImpl implements AuthService {
         checkUserAvailabilityInDatabase(userRegisterRequest);
         String encodedPassword = passwordEncoder.encode(userRegisterRequest.getPassword());
         User user =  modelMapper.map(userRegisterRequest, User.class);
+
         user.setPassword(encodedPassword);
         userRepository.save(user);
         return "user has been registered successfully";
@@ -103,9 +114,18 @@ public class AuthServiceImpl implements AuthService {
         if(!userRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("given email is not registered with us");
         }
+        User user = userRepository.findUserByEmail(email).get();
+        resetPasswordTokenService.generatePasswordTokenForUser();
+        String body = String.format("click on the link to reset your password. %s", generateResetUrl().toString());
+        mailService.send(user.getEmail(), "reset password", body);
+    }
 
-
-
+    public UriComponents generateResetUrl() {
+        return UriComponentsBuilder
+                .fromUriString("http://localhost:8080")
+                .path("/reset-password")
+                .path("/"+resetPasswordTokenService.generatePasswordTokenForUser())
+                .build();
     }
 
     @Override

@@ -5,10 +5,7 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,9 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.Collection;
 
 @Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Builder
 @Table(name = "task_user")
 public class User implements UserDetails {

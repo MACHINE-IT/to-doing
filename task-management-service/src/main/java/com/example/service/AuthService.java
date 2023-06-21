@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.request.UserRegisterRequest;
 import com.example.request.UserSignInRequest;
+import org.springframework.web.util.UriComponents;
 
 import java.sql.SQLException;
 
@@ -19,5 +20,5 @@ public interface AuthService {
 
     public void forgotUsername();
 
-
+    public UriComponents generateResetUrl();
 }

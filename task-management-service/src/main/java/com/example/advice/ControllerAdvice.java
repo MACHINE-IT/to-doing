@@ -72,6 +72,8 @@
 
 package com.example.advice;
 
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.ComponentScan;
@@ -103,6 +105,12 @@ public class ControllerAdvice {
             errorMap.put(error.getField(), error.getDefaultMessage());
         });
         return ResponseEntity.badRequest().body(errorMap);
+    }
+
+    @ExceptionHandler(jakarta.validation.ValidationException.class)
+    public ResponseEntity<String> handleValidationException(ValidationException exception) {
+        String errorMessage = "Validation error: " + exception.getCause().getMessage();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
     }
 
     @ExceptionHandler(BadCredentialsException.class)
@@ -150,7 +158,7 @@ public class ControllerAdvice {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> exceptionHandler(Exception exception) {
-        logger.error("Handling Exception: {}", exception.getMessage());
+        logger.error("Handling Exception: {}", exception.getCause().getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("some internal server error ocurred");
     }
 

@@ -9,11 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.sql.SQLException;
 
 @RestController
 @RequestMapping(RestEndpoints.AUTH)
 public class AuthController {
+
 
     private final AuthService authService;
 
@@ -45,7 +47,7 @@ public class AuthController {
 
     @GetMapping(RestEndpoints.RESET_PASSWORD)
     public ResponseEntity<?> resetPassword(String email) {
-
-        return null;
+        authService.forgotPassword(email);
+        return ResponseEntity.ok().body("reset password link has been sent to your email");
     }
 }

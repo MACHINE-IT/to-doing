@@ -4,5 +4,7 @@ import com.example.model.User;
 
 public interface ResetPasswordTokenService {
 
-    void generatePasswordTokenForUser(User user, String token);
+    String generatePasswordTokenForUser();
+
+    boolean validateTheToken(String token);
 }
