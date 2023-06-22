@@ -26,7 +26,7 @@ import java.util.Properties;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final String[] allowedUrls = {"/api/auth/*", "/test", "/v3/api-docs/**", "/swagger-ui/**"};
+    private final String[] allowedUrls = {"/api/auth/*", "/test/**", "/v3/api-docs/**", "/swagger-ui/**"};
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
     private final JwtAuthenticationException jwtAuthenticationException;

@@ -3,8 +3,8 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-## task-management-service/src/main/resources/application.properties
-
+ task-management-service/src/main/resources/application.properties
+    task-management-service/src/main/resources/application-dev.properties
 
 
 ### STS ###
