@@ -15,9 +15,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class PasswordToken {
 
-    private static final int EXPIRATION = ChronoUnit.MINUTES.ordinal() * 2;
-
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String token;

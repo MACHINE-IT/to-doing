@@ -6,6 +6,7 @@ import com.example.service.ResetPasswordTokenService;
 import com.example.service.impl.ResetPasswordTokenServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.SimpleMailMessage;
@@ -27,6 +28,18 @@ import java.util.Properties;
 public class SecurityConfig {
 
     private final String[] allowedUrls = {"/api/auth/*", "/test/**", "/v3/api-docs/**", "/swagger-ui/**"};
+    @Value("${spring.mail.username}")
+    protected String username;
+    {
+        username = "";
+    }
+
+    @Value("${spring.mail.password}")
+    protected String password;
+    {
+        password = "";
+    }
+
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
     private final JwtAuthenticationException jwtAuthenticationException;
@@ -71,11 +84,11 @@ public class SecurityConfig {
     public JavaMailSender getJavaMailSender() {
 
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-
-        mailSender.setUsername("sandeepgfgjava@gmail.com");
-        mailSender.setPassword("hmadfrmfqafxjuov");
+        mailSender.setUsername(username);
+        mailSender.setPassword(password);
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
@@ -91,10 +104,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public ResetPasswordTokenService resetPasswordTokenService() {
-        return new ResetPasswordTokenServiceImpl();
-    }
-
+   
 
 }

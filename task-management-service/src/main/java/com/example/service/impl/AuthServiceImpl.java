@@ -1,6 +1,8 @@
 package com.example.service.impl;
 
+import com.example.model.PasswordToken;
 import com.example.model.User;
+import com.example.repository.ResetPasswordRepository;
 import com.example.repository.UserRepository;
 import com.example.request.UserRegisterRequest;
 import com.example.request.UserSignInRequest;
@@ -37,10 +39,12 @@ public class AuthServiceImpl implements AuthService {
     private final MailService mailService;
 
     private final ResetPasswordTokenService resetPasswordTokenService;
+    private final ResetPasswordRepository resetPasswordRepository;
 
     @Autowired
     public AuthServiceImpl(JwtService jwtService, ValidEmailOrUsernameValidator validator, PasswordEncoder passwordEncoder, CustomAuthenticationProvider customAuthenticationProvider,
-                           UserRepository userRepository, ModelMapper modelMapper, MailServiceImpl mailService, ResetPasswordTokenServiceImpl resetPasswordTokenService) {
+                           UserRepository userRepository, ModelMapper modelMapper, MailServiceImpl mailService, ResetPasswordTokenServiceImpl resetPasswordTokenService,
+                           ResetPasswordRepository resetPasswordRepository) {
         this.jwtService = jwtService;
         this.validator = validator;
         this.passwordEncoder = passwordEncoder;
@@ -49,6 +53,7 @@ public class AuthServiceImpl implements AuthService {
         this.modelMapper = modelMapper;
         this.mailService = mailService;
         this.resetPasswordTokenService = resetPasswordTokenService;
+        this.resetPasswordRepository = resetPasswordRepository;
     }
 
     @Override
@@ -111,13 +116,19 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void forgotPassword(String email) {
-        if(!userRepository.existsByEmail(email)) {
+        Optional<User> user = userRepository.findUserByEmail(email);
+        if(!userRepository.existsByEmail(email) || user.isEmpty()) {
             throw new IllegalArgumentException("given email is not registered with us");
         }
-        User user = userRepository.findUserByEmail(email).get();
-        resetPasswordTokenService.generatePasswordTokenForUser();
+        String generatedToken = resetPasswordTokenService.generatePasswordTokenForUser();
+        PasswordToken passwordToken = PasswordToken.builder()
+                .token(generatedToken)
+                .user(user.get())
+                .expiryDate(resetPasswordTokenService.calculateExpirationDate(5L))
+                .build();
+        resetPasswordRepository.save(passwordToken);
         String body = String.format("click on the link to reset your password. %s", generateResetUrl().toString());
-        mailService.send(user.getEmail(), "reset password", body);
+        mailService.send(user.get().getEmail(), "reset password", body);
     }
 
     public UriComponents generateResetUrl() {

@@ -16,7 +16,6 @@ import java.sql.SQLException;
 @RequestMapping(RestEndpoints.AUTH)
 public class AuthController {
 
-
     private final AuthService authService;
 
     @Autowired
@@ -36,9 +35,10 @@ public class AuthController {
         return ResponseEntity.ok().body(token);
     }
 
-    @GetMapping("/signing")
-    public String signIn() {
-        return "redirect:/oauth2/authorization/google";
+    @GetMapping(RestEndpoints.FORGOT_PASSWORD)
+    public ResponseEntity<?> forgotPassword(@RequestBody String email){
+        authService.forgotPassword(email);
+        return ResponseEntity.ok().body("reset password link has been sent to your email");
     }
 
     public void signOut() {
