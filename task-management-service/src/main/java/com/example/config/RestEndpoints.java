@@ -5,15 +5,24 @@ public final class RestEndpoints {
     public static final String TASKS = "/api/tasks";
     public static final String USER = "/api/users";
     public static final String AUTH = "/api/auth";
-    public static final String CREATE_TASK = "/";
+    public static final String CREATE_TASK = "";
     public static final String DELETE_TASK = "/{taskId}";
-    public static final String UPDATE_TASK = "/";
-    public static final String GET_BY_USERID = "/{userId}/tasks";
+    public static final String UPDATE_TASK = "/{taskId}";
+    public static final String GET_BY_USERID = "/user/tasks";
+    public static final String GET_TASK_BY_TASKID = "/{taskId}";
     public static final String SIGN_IN = "/signin";
     public static final String REGISTER = "/register";
     public static final String FORGOT_PASSWORD = "/forgot-password";
+
     public static final String SIGN_OUT = "/signout";
+
     public static final String RESET_PASSWORD = "/reset-password/*";
+
+    public static final String GET_PROFILE_BY_USER_ID = "";
+
+    public static final String UPDATE_PROFILE_USER_ID = "";
+
+    public static final String SHARE_THE_TASK = "/tasks/{taskId}"; // -> only owner can invite others
 
 }
 

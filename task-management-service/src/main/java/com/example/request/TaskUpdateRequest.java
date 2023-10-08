@@ -17,9 +17,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TaskUpdateRequest {
-    @NotBlank(message = "please provide taskId to update")
-    @NotEmpty(message = "please provide taskId to update")
-    // this is taskId
+//    @NotBlank(message = "please provide taskId to update")
+//    @NotEmpty(message = "please provide taskId to update")
+//    // this is taskId
     private Long id;
 
     @NotBlank(message = "title should not be blank")

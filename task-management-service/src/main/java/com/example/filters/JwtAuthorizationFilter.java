@@ -3,6 +3,7 @@ package com.example.filters;
 import com.example.model.User;
 import com.example.utils.JwtAuthenticationProvider;
 import com.example.utils.JwtService;
+import com.example.utils.TokenBlacklistService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,11 +29,14 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
 
+    private final TokenBlacklistService tokenBlacklistService;
+
 
     @Autowired
-    public JwtAuthorizationFilter(JwtService jwtService, JwtAuthenticationProvider jwtAuthenticationProvider) {
+    public JwtAuthorizationFilter(JwtService jwtService, JwtAuthenticationProvider jwtAuthenticationProvider, TokenBlacklistService tokenBlacklistService) {
         this.jwtService = jwtService;
         this.jwtAuthenticationProvider = jwtAuthenticationProvider;
+        this.tokenBlacklistService = tokenBlacklistService;
     }
 
     @Override
@@ -49,14 +53,14 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         User user = User.builder()
                 .username(username)
                 .build();
-        if(!jwtService.validateToken(token, user)) {
+        if(!jwtService.isValidToken(token, user) || tokenBlacklistService.isRevokedToken(token)) {
             filterChain.doFilter(request, response);
         }
         if(!checkAuthentication(username)) {
             setAuthentication(username);
         }
+        request.setAttribute("jwtToken", token);
         filterChain.doFilter(request, response);
-
     }
 
     private String extractToken(HttpServletRequest request) {

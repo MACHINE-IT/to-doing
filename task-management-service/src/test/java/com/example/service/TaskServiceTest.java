@@ -3,7 +3,9 @@ package com.example.service;
 import com.example.model.Category;
 import com.example.model.Priority;
 import com.example.model.Task;
+import com.example.model.User;
 import com.example.repository.TaskRepository;
+import com.example.repository.UserRepository;
 import com.example.request.TaskRequest;
 import com.example.request.TaskUpdateRequest;
 import com.example.response.TaskResponse;
@@ -15,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 @ContextConfiguration(classes = TaskManagementServiceApplication.class)
@@ -25,26 +29,32 @@ public class TaskServiceTest {
     private final TaskRepository taskRepository;
     private final ModelMapper modelMapper;
 
+    private final UserRepository userRepository;
     @Autowired
-    public TaskServiceTest(TaskService taskService, TaskRepository taskRepository, ModelMapper modelMapper) {
+    public TaskServiceTest(TaskService taskService, TaskRepository taskRepository, ModelMapper modelMapper, UserRepository userRepository) {
         this.taskService = taskService;
         this.taskRepository = taskRepository;
         this.modelMapper = modelMapper;
+        this.userRepository = userRepository;
     }
 
 
     @Test
     public void createTaskTest() {
+        Optional<User> user = userRepository.findById(1L);
+
+        LocalDateTime dueDate = LocalDateTime.now().withHour(18).withMinute(0).withSecond(0);
         TaskRequest taskRequest = TaskRequest
                 .builder()
-                .title("testing the service")
-                .description("I am testing the task service")
-                .category(Category.WORK)
+                .title("OOPs topic")
+                .description("do a OOPS revision 6pm")
+                .category(Category.PERSONAL)
                 .priority(Priority.MEDIUM)
-                .userId(1L)
+                .dueDate(dueDate)
+                .ownerId(user.get())
                 .build();
 
-        TaskResponse taskResponse = taskService.createTask(taskRequest);
+        TaskResponse taskResponse = taskService.createTask( user.get(),taskRequest);
         Assertions.assertEquals(taskResponse.getTitle(),taskRequest.getTitle());
     }
 
@@ -79,7 +89,6 @@ public class TaskServiceTest {
     public void updateTaskByTaskIdTestShouldThrowIfNotPresent() {
         long taskId = 53L;
         Task task = taskRepository.findById(taskId).orElse(null);
-
     }
 
 }

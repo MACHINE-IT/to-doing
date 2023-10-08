@@ -5,6 +5,7 @@ import com.example.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -16,8 +17,7 @@ import java.util.function.Function;
 @Component
 public class JwtService {
 
-    private String secretKey="lkashdfoaisdvoalsdifjiLIUDHFADSJNoiDSFSOIDFHdsOISDU02937JFDSIFJfu1op2i3u12k3";
-    private long expirationInMs = 1000 * 500;
+    byte[] secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512).getEncoded();
 
     public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
@@ -26,6 +26,7 @@ public class JwtService {
 
     private String createToken(Map<String, Object> claims, String subject) {
         Instant now = Instant.now();
+        long expirationInMs = 1000 * 500;
         Instant expirationInstant = now.plusMillis(expirationInMs);
         Date expirationDate = Date.from(expirationInstant);
 
@@ -34,7 +35,7 @@ public class JwtService {
                 .setSubject(subject)
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(expirationDate)
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
     }
 
@@ -64,7 +65,7 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    public Boolean validateToken(String token, User userDetails) {
+    public Boolean isValidToken(String token, User userDetails) {
         String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }

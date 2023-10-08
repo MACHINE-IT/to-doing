@@ -11,15 +11,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 @ContextConfiguration(classes = TaskManagementServiceApplication.class)
 public class TaskRepositoryTest {
 
     final TaskRepository taskRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     public TaskRepositoryTest(TaskRepository taskRepository) {
@@ -28,19 +36,13 @@ public class TaskRepositoryTest {
 
     @Test
     void saveTaskTest() {
-//        User user = User.builder()
-//                .email("sandeep@gmail.com")
-//                .userId(1L)
-//                .username("sandeep")
-//                .build();
-
 
         Task task = Task.builder()
-                .title("test")
-                .description("just testing")
+                .title("cooking")
+                .description("I want to cook before 2pm")
                 .category(Category.PERSONAL)
                 .priority(Priority.HIGH)
-                .userId(3L)
+                .ownerId(null) // to be changed
                 .build();
 
         Task task1 = taskRepository.save(task);
@@ -61,17 +63,18 @@ public class TaskRepositoryTest {
                 .description("just testing")
                 .category(Category.PERSONAL)
                 .priority(Priority.HIGH)
-                .userId(3L)
                 .build();
 
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> taskRepository.save(task));
     }
 
     @Test
+    @Transactional
     void getAllTasksTest() {
-        List<Task> listOfTasks = taskRepository.findByUserId(1L);
-        Assertions.assertTrue(listOfTasks.size() > 0);
+        Optional<User> user = userRepository.findById(1L);
+        Pageable pageable = PageRequest.of(0, 3, Sort.by("title").ascending());
+        Page<Task> listOfTasks = taskRepository.findByOwnerId(user.get(), pageable);
+        System.out.println(listOfTasks);
+        Assertions.assertTrue(listOfTasks.stream().count() > 0);
     }
-
-
 }

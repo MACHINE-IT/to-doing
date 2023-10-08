@@ -10,7 +10,7 @@ public interface AuthService {
 
     public String signIn(UserSignInRequest userSignInRequest);
 
-    public void signOut();
+    public void signOut(String token);
 
     public String registerUser(UserRegisterRequest userRegisterRequest) throws SQLException;
 

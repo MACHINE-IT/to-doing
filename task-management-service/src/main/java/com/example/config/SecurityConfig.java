@@ -18,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -27,7 +28,7 @@ import java.util.Properties;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final String[] allowedUrls = {"/api/auth/*", "/test/**", "/v3/api-docs/**", "/swagger-ui/**"};
+    private final String[] allowedUrls = {"/api/auth/**", "/test/**", "/v3/api-docs/**", "/swagger-ui/**"};
     @Value("${spring.mail.username}")
     protected String username;
     {
@@ -50,7 +51,6 @@ public class SecurityConfig {
         this.jwtAuthenticationException = jwtAuthenticationException;
     }
 
-
     @Bean
     public SecurityFilterChain config(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -67,6 +67,7 @@ public class SecurityConfig {
                 })
                 .build();
     }
+
 
     @Bean
     public ModelMapper getModelMapper() {
@@ -98,12 +99,8 @@ public class SecurityConfig {
         return mailSender;
     }
 
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-   
-
 }

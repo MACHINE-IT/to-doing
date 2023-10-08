@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories("com.example.repository")
 @ComponentScan("com.example")
 @EntityScan("com.example.model")
-@PropertySource("classpath:application-dev.properties")
+//@PropertySource("classpath:application-dev.properties")
 public class TaskManagementServiceApplication {
 
 	public static void main(String[] args) {

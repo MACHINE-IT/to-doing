@@ -24,7 +24,7 @@ public class UserServiceTest {
     @Test
     public void getAllThetasksByUserIdTest() {
         long userId = 1L;
-        List<TaskResponse> taskResponseList = userService.getAllTasks(userId);
+        List<TaskResponse> taskResponseList = userService.getAllTasks(userId, null);
         Assertions.assertTrue(taskResponseList.size() > 0);
     }
 }

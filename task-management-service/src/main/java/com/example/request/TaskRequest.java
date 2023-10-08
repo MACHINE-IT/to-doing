@@ -4,6 +4,7 @@ package com.example.request;
 import com.example.model.Category;
 import com.example.model.Priority;
 
+import com.example.model.User;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -32,7 +33,5 @@ public class TaskRequest {
     @NotNull(message = "category should not be blank")
     private Category category;
 
-    @Min(value = 1, message = "please provide valid userId")
-    private long userId;
-
+    private User ownerId;
 }

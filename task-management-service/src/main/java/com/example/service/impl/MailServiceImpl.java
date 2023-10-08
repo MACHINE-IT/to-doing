@@ -29,7 +29,6 @@ public class MailServiceImpl implements com.example.service.MailService  {
     @Override
     public void send(String toEmail, String subject, String body) {
 
-
         simpleMailMessage.setTo(toEmail);
         simpleMailMessage.setText(body);
         simpleMailMessage.setSubject(subject);
@@ -37,6 +36,5 @@ public class MailServiceImpl implements com.example.service.MailService  {
         mailSender.send(simpleMailMessage);
 
         logger.info("mail sent successfully");
-
     }
 }

@@ -27,9 +27,7 @@ public class JwtServiceTest {
         String token = jwtService.generateToken(user.getUsername());
         System.out.println("the token is " + token);
         String actualUsername = jwtService.extractUsername(token);
-        boolean isTokenValid = jwtService.validateToken(token, user);
+        boolean isTokenValid = jwtService.isValidToken(token, user);
         Assertions.assertEquals(user.getUsername(), actualUsername);
     }
-
-//    public void
 }

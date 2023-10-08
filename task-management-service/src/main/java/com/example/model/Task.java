@@ -6,9 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import java.util.Set;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Builder
@@ -17,8 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Task {
 
-    @SequenceGenerator(name = "task_id", sequenceName = "task_id", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "task_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
@@ -33,11 +32,18 @@ public class Task {
     @Column(nullable = false)
     private Category category;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id", referencedColumnName = "userId")
-    @Column(name = "user_id")
-    private long userId;
+    @ManyToOne()
+    @JoinColumn(name = "owner_id")
+    private User ownerId;
 
     @CreatedDate
     private LocalDateTime createdAt;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "shared_tasks",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "task_id")
+    )
+    private Set<User> taskMembers;
 }

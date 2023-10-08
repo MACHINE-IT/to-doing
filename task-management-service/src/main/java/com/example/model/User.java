@@ -1,16 +1,14 @@
 package com.example.model;
 
-import com.example.service.UserService;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import java.util.List;
 
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -20,9 +18,6 @@ import java.util.Collection;
 @Table(name = "task_user")
 public class User implements UserDetails {
 
-//    @Id
-//    @SequenceGenerator(name = "user_gen", sequenceName = "user_gen", allocationSize = 1)
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_gen")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -34,7 +29,6 @@ public class User implements UserDetails {
     @Column(nullable = false, unique = true)
     private String email;
 
-    //new
     @Column(nullable = false)
     private String firstName;
 
@@ -42,6 +36,15 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String password;
+
+    @ManyToMany(mappedBy = "taskMembers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Task> taskList;
+
+    @OneToOne(mappedBy = "userId")
+    private Profile profile;
+
+    @ManyToMany(mappedBy = "projectMembers", fetch = FetchType.LAZY)
+    private Set<Project> projects;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,0 +1,33 @@
+server:
+  port: 8081
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:sqlserver://localhost:55535;databaseName=task_management;trustServerCertificate=true
+    url: jdbc:mysql://localhost:3306/task_master
+    username: root
+    password: your_password
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  application:
+    name: task-management-service
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: GOOGLE_CLIENT_ID
+            client-secret: GOOGLE_SECRET_ID
+  mail:
+    password: skf2
+    username: sandeepgfgjava@gmail.com
+  main:
+    banner-mode: off
+

@@ -41,8 +41,11 @@ public class AuthController {
         return ResponseEntity.ok().body("reset password link has been sent to your email");
     }
 
-    public void signOut() {
-
+    @PostMapping(RestEndpoints.SIGN_OUT)
+    public ResponseEntity<?> signOut(@RequestHeader("Authorization") String tokenHeader) {
+        String token = tokenHeader.substring(7);
+        authService.signOut(token);
+        return  ResponseEntity.ok().build();
     }
 
     @GetMapping(RestEndpoints.RESET_PASSWORD)

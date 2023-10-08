@@ -11,6 +11,7 @@ import com.example.service.MailService;
 import com.example.service.ResetPasswordTokenService;
 import com.example.utils.CustomAuthenticationProvider;
 import com.example.utils.JwtService;
+import com.example.utils.TokenBlacklistService;
 import com.example.validations.ValidEmailOrUsernameValidator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,32 +20,39 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.UriBuilder;
-import org.springframework.web.util.UriBuilderFactory;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.Instant;
 import java.util.Optional;
 
 @Service
 public class AuthServiceImpl implements AuthService {
 
     private final JwtService jwtService;
+
     private final ValidEmailOrUsernameValidator validator;
+
     private final PasswordEncoder passwordEncoder;
 
     private final CustomAuthenticationProvider customAuthenticationProvider;
+
     private final UserRepository userRepository;
+
     private final ModelMapper modelMapper;
+
     private final MailService mailService;
 
     private final ResetPasswordTokenService resetPasswordTokenService;
+
     private final ResetPasswordRepository resetPasswordRepository;
+
+    private final TokenBlacklistService tokenBlacklistService;
 
     @Autowired
     public AuthServiceImpl(JwtService jwtService, ValidEmailOrUsernameValidator validator, PasswordEncoder passwordEncoder, CustomAuthenticationProvider customAuthenticationProvider,
                            UserRepository userRepository, ModelMapper modelMapper, MailServiceImpl mailService, ResetPasswordTokenServiceImpl resetPasswordTokenService,
-                           ResetPasswordRepository resetPasswordRepository) {
+                           ResetPasswordRepository resetPasswordRepository, TokenBlacklistService tokenBlacklistService) {
         this.jwtService = jwtService;
         this.validator = validator;
         this.passwordEncoder = passwordEncoder;
@@ -54,6 +62,7 @@ public class AuthServiceImpl implements AuthService {
         this.mailService = mailService;
         this.resetPasswordTokenService = resetPasswordTokenService;
         this.resetPasswordRepository = resetPasswordRepository;
+        this.tokenBlacklistService = tokenBlacklistService;
     }
 
     @Override
@@ -83,8 +92,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void signOut() {
-
+    public void signOut(String token) {
+        tokenBlacklistService.addRevokedTokens(token, Instant.now());
     }
 
     @Override
