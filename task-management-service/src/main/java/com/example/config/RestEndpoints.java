@@ -22,7 +22,8 @@ public final class RestEndpoints {
 
     public static final String UPDATE_PROFILE_USER_ID = "";
 
-    public static final String SHARE_THE_TASK = "/tasks/{taskId}"; // -> only owner can invite others
+    public static final String SHARE_THE_TASK = "/share/tasks"; // -> only owner can invite others
+    public static final String SHARE_THE_PROJECT = "/share/projects"; // -> only owner can invite others
 
 }
 

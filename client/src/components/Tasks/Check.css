@@ -1,0 +1,164 @@
+.mui-dropdown {
+    display: inline-block;
+    position: relative;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 10px;
+    width: 200px;
+    background: white;
+}
+
+.mui-dropdown:focus {
+    border-color: #1976D2;
+    outline: 0;
+}
+
+.mui-dropdown option {
+    color: #333;
+}
+
+.mui-dropdown label {
+    font-size: 16px;
+}
+
+/* Style for the selected option */
+.mui-dropdown option:checked {
+    background-color: #1976D2;
+    color: #fff;
+    margin: 10px;
+}
+
+/* Style for the dropdown icon */
+.mui-dropdown::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-150%);
+    pointer-events: none;
+    font-size: 14px;
+    margin: 10px;
+}
+
+/* Add hover styles for better interactivity */
+.mui-dropdown:hover {
+    border-color: #b0b0b0;
+    transition: border-color 0.3s ease;
+    cursor: pointer;
+}
+
+
+/* Style the container */
+.w-full {
+    max-width: 100%;
+}
+
+/* Style the filter input */
+.max-w-sm {
+    width: 100%;
+}
+
+/* Style the Columns dropdown button */
+.ml-auto {
+    margin-left: auto;
+}
+
+/* Style the table header */
+.capitalize {
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: color 0.2s;
+    font-weight: 500;
+}
+
+.capitalize:hover {
+    color: #1976D2; /* MUI primary color */
+}
+
+/* Style the filter input */
+.max-w-sm {
+    width: 100%;
+}
+
+/* Style the table */
+.rounded-md {
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Style the table rows */
+.border .h-24 {
+    min-height: 2.75rem;
+}
+
+/* Style the selected rows */
+[data-state="selected"] {
+    background-color: #DAECFF; /* MUI selected background color */
+}
+
+/* Style the table cells */
+.text-right {
+    text-align: right;
+}
+
+/* Style the Actions menu button */
+.dropdown-menu-trigger {
+    position: relative;
+}
+
+/* Style the Actions menu button icon */
+.sr-only {
+    display: none;
+}
+
+/* Style the Actions menu button icon */
+.h-4 {
+    height: 1rem;
+    width: 1rem;
+}
+
+/* Style the Columns dropdown button icon */
+.ml-2 .h-4 {
+    height: 1rem;
+    width: 1rem;
+}
+
+/* Style the "Columns" dropdown button */
+.capitalize .ml-2 .h-4 {
+    margin-left: 0.5rem;
+}
+
+/* Style the "Columns" dropdown items */
+.capitalize .ml-2 .h-4 .capitalize {
+    text-transform: capitalize;
+}
+
+/* Style the menu items */
+.ml-2 .h-4 .capitalize {
+    text-transform: capitalize;
+}
+
+/* Style the number input for the filter */
+.max-w-sm .h-24 {
+    min-height: 1.5rem;
+}
+
+/* Style the pagination buttons */
+.space-x-2 .space-x-2 {
+    margin: 0;
+}
+
+/* Style the "Previous" and "Next" buttons */
+.space-x-2 .space-x-2 .border .text-center {
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+/* Style the row selection info text */
+.text-muted-foreground .space-x-2 .text-muted-foreground {
+    color: #333; /* MUI text color */
+}
+

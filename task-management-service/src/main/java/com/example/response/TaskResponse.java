@@ -22,5 +22,5 @@ public class TaskResponse {
     private LocalDateTime dueDate;
     private Priority priority;
     private Category category;
-    private List<User> members;
+    private List<String> members;
 }

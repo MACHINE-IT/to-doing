@@ -44,6 +44,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                                     @NotNull FilterChain filterChain) throws ServletException, IOException {
         logger.info("inside do Filter method");
 
+        if(request.getRequestURL().toString().equals("http://localhost:8081/task-management-sockets")) {
+
+        }
         String token = extractToken(request);
         if(token == null) {
             filterChain.doFilter(request, response);
@@ -89,5 +92,4 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         return authentication != null && authentication.isAuthenticated()
                 && authentication.getName().equals(username);
     }
-
 }

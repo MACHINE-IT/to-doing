@@ -1,27 +1,25 @@
-import Register from "./Register.js";
-import Login from "./Login.jsx"
-import PasswordReset from "./PasswordReset.js";
-import TermsAndConditions from "./TermsAndConditions.js";
-import { userForm } from "react-hook-form";
-import { Route, Routes } from "react-router-dom"
-import "./App.css";
-import 'react-bootstrap';
+import React from 'react';
+import Home from './pages/Home.jsx';
 
 function App() {
-  // const { register, handleSubmit, errors } = userForm();
+    const items = [
+        { id: 1, title: 'Todo', count: 5 },
+        { id: 2, title: 'In Progress', count: 10 },
+        // Add more items as needed
+    ];
 
-  return (
-    <div className="App">
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/password-reset" element={<PasswordReset />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/terms-of-service" element={<TermsAndConditions />} />
-        <Route path="/privacy-policy" element={<TermsAndConditions />} />
-      </Routes>
-    </div>
+    const clearFilters = () => {
+        // Add logic to clear filters here
+        console.log('Filters cleared');
+    };
 
-  );
+    return (
+        <div className="App">
+            <Home />
+            {/* <h1>Hello</h1> */}
+            {/* <DropdownCha items={items} onClearFilters={clearFilters} /> */}
+        </div>
+    );
 }
 
 export default App;

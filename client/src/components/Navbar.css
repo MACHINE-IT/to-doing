@@ -1,0 +1,80 @@
+
+.menu {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.search-bar {
+    min-width: 50%;
+}
+
+
+  .MuiAppBar-colorPrimary {
+    /* background-color: #26b8da !important; */
+  }
+
+  .MuiToolbar-root.MuiToolbar-regular.MuiToolbar-gutters {
+    display: flex;
+  }
+  .MuiContainer-root.MuiContainer-maxWidthLg {
+    display: flex;
+    align-items: center;
+  }
+
+  input, .MuiInputBase-input {
+    color: rgb(34, 34, 34) !important;
+  }
+
+  .MuiContainer-root.MuiContainer-maxWidthLg > div:nth-child(2) {
+    /* Your styles for the second child div go here */
+    /* For example, let's change the background color to yellow */
+    display: flex !important;
+}
+  
+  
+
+  .MuiContainer-root .MuiContainer-maxWidthLg {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Style the outer container */
+.MuiInputBase-root {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: #ffffff; /* Background color */
+    border: 1px solid #ccc; /* Border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 8px; /* Spacing around the input */
+  
+    /* Add box shadow for a subtle effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Style the search input field */
+  .MuiInputBase-input {
+    border: none;
+    outline: none;
+    flex-grow: 1; /* Take up all available space */
+    padding: 0 8px; /* Add some padding */
+  
+    /* Customize text color and font */
+    color: #333;
+    font-size: 16px;
+  }
+  
+  /* Style the search icon */
+  .MuiSvgIcon-root {
+    fill: #666; /* Icon color */
+    margin-right: 8px; /* Spacing between icon and input */
+  }
+  
+  /* Hover effect for the search bar */
+  .MuiInputBase-root:hover {
+    /* background-color: #58ccd9; Lighter background color on hover */
+    transition: background-color 0.3s ease;
+  }
+  

@@ -46,6 +46,12 @@ public class User implements UserDetails {
     @ManyToMany(mappedBy = "projectMembers", fetch = FetchType.LAZY)
     private Set<Project> projects;
 
+    @OneToMany(mappedBy = "user")
+    private List<UserNotificationPreferences> notificationPreferences;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserNotifications> userNotifications;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

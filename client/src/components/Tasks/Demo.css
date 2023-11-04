@@ -1,0 +1,26 @@
+.custom-list-item {
+    height: 1px; /* Adjust the height as needed */
+    margin-left: -40px ;
+}
+
+.list-item-button {
+    height: 30px;
+    color: black !important;
+}
+
+.custom-list-item-icon {
+    /*height: 1px; !* Adjust the height as needed *!*/
+    margin-left: -50% ;
+}
+
+.custom-list-item-label {
+    margin-left:  -30%;
+}
+
+.custom-menu-button {
+    color: black !important;
+}
+
+.custom-menu {
+    width: 160px;
+}

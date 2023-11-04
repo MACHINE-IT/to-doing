@@ -5,7 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c50af929-baa2-4af5-b939-8609a70aa7fb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/response/TaskMember.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/PasswordReset.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/PasswordReset.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/TermsAndConditions.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/TermsAndConditions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/reportWebVitals.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/setupTests.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/task-management-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/Controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/Controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/Controller/TestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/Controller/TestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/Controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/config/RestEndpoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/config/RestEndpoints.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/filters/JwtAuthorizationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/filters/JwtAuthorizationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/model/NotificationType.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/model/NotificationType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/response/TaskResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/response/TaskResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/service/SharedTaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/service/SharedTaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/service/impl/SharedTaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/service/impl/SharedTaskServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-management-service/src/main/java/com/example/service/impl/UserServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,31 +60,36 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
   <component name="ProjectId" id="2RLH1xAVGKyTI1Ml6YQOlsuewSA" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;backend&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Interview Prep/to doing/to-doing/client&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "backend-service",
+    "last_opened_file_path": "D:/my projects/to-doing-backend/repo clone/to-doing/client",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
         <entry key="com.haulmont.rcb.reactComponents" value="false" />
         <entry key="com.haulmont.rcb.reactInspector" value="false" />
+        <entry key="com.haulmont.rcb.storybook" value="false" />
       </map>
     </option>
   </component>
@@ -84,6 +116,7 @@
       <workItem from="1687084065540" duration="1311000" />
       <workItem from="1687273039095" duration="339000" />
       <workItem from="1687273943364" duration="34000" />
+      <workItem from="1698057995709" duration="17000" />
     </task>
     <servers />
   </component>

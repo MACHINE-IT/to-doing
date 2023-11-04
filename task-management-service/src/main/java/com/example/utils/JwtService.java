@@ -41,7 +41,7 @@ public class JwtService {
 
     // Extract the username from a JWT token
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+        return extractClaim(token, (claim) -> claim.getSubject());
     }
 
     // Extract a claim from a JWT token using a provided claim resolver function

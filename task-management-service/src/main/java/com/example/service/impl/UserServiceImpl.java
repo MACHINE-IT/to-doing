@@ -4,6 +4,7 @@ import com.example.model.Task;
 import com.example.model.User;
 import com.example.repository.TaskRepository;
 import com.example.repository.UserRepository;
+import com.example.response.TaskMember;
 import com.example.response.TaskResponse;
 import com.example.service.UserService;
 import com.example.utils.JwtService;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,10 +47,27 @@ public class UserServiceImpl implements UserService {
     public List<TaskResponse> getAllTasks(long userId, Pageable pageableRequest) {
 
         Optional<User> user = userRepository.findById(userId);
+        if(user.isEmpty()) {
+            throw new RuntimeException("No user found");
+        }
         Page<Task> listOfTasks = taskRepository.findByOwnerId(user.get(), pageableRequest);
-        return listOfTasks.stream()
-                .map((element) -> modelMapper.map(element, TaskResponse.class))
-                .collect(Collectors.toList());
+        List<TaskResponse> taskResponseList = listOfTasks.stream()
+                .map((task) -> TaskResponse.builder()
+                        .id(task.getId())
+                        .title(task.getTitle())
+                        .category(task.getCategory())
+                        .description(task.getDescription())
+                        .dueDate(task.getDueDate())
+                        .priority(task.getPriority())
+                        .build())
+                .toList();
+        for(Task task: listOfTasks) {
+            taskResponseList.forEach(taskResponse -> {
+                List<String> usernamesList = task.getTaskMembers().stream().map(User::getUsername).toList();
+                taskResponse.setMembers(usernamesList);
+            });
+        }
+        return taskResponseList;
     }
 
     @Override

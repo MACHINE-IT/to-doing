@@ -21,6 +21,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping(RestEndpoints.USER)
+@CrossOrigin(allowCredentials = "true", origins = "{http://localhost:3000,http://localhost:8181}")
 public class UserController {
     private final UserService userService;
     private final TaskRepository taskRepository;
@@ -35,7 +36,7 @@ public class UserController {
         this.sharedTaskService = sharedTaskService;
     }
 
-    @GetMapping(RestEndpoints.GET_BY_USERID)
+    @GetMapping( RestEndpoints.GET_BY_USERID)
     public ResponseEntity<?> getAllTasksForUser(HttpServletRequest request,
                                                 @RequestParam(name = "sortBy", defaultValue = "title") String sortBy,
                                                 @RequestParam(name = "pageNum", defaultValue = "0") Integer pageNum,
@@ -47,14 +48,15 @@ public class UserController {
     }
 
     @PutMapping(RestEndpoints.SHARE_THE_TASK)
-    public ResponseEntity<?> shareTheTask(@RequestParam(name = "taskId") long taskId,
+    public ResponseEntity<?> shareTheTask(@RequestBody TaskShareRequest taskShareRequest,
                                           HttpServletRequest request) throws IllegalAccessException {
         User userId = userService.getUserIdByToken(request);
+        long taskId = taskShareRequest.getTaskId();
         Task task = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchElementException("No task found with " + taskId));
         if (!task.getOwnerId().getUserId().equals(userId.getUserId())) {
             throw new IllegalAccessException("Only owner of the taskId: " + taskId + " can share.");
         }
-        sharedTaskService.share();
+        sharedTaskService.share(taskShareRequest);
         return null;
     }
 

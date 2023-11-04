@@ -4,6 +4,9 @@ import com.example.config.RestEndpoints;
 import com.example.request.UserRegisterRequest;
 import com.example.request.UserSignInRequest;
 import com.example.service.AuthService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +33,9 @@ public class AuthController {
     }
 
     @PostMapping(RestEndpoints.SIGN_IN)
-    public ResponseEntity<?> signIn(@RequestBody @Valid UserSignInRequest userSignInRequest) {
+    public ResponseEntity<?> signIn(@RequestBody @Valid UserSignInRequest userSignInRequest, HttpServletRequest request, HttpServletResponse response) {
         String token = authService.signIn(userSignInRequest);
-        return ResponseEntity.ok().body(token);
+        return ResponseEntity.ok().body("Welcome, " + userSignInRequest.getEmailOrUsername() + ", "+ token);
     }
 
     @GetMapping(RestEndpoints.FORGOT_PASSWORD)
