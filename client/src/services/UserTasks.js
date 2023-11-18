@@ -1,6 +1,5 @@
+import BaseURL, { axiosClient } from './commons/BaseURL';
 
-import BaseURL from './commons/BaseURL'
-import {axiosClient} from './commons/BaseURL'
 
 const GET_ALL_TASKS_BY_USER_URL = `${BaseURL}/users/user/tasks`
 const TestingUrl = `http://localhost:8081/test/hello-world/sdf`
@@ -8,15 +7,9 @@ const TestingUrl = `http://localhost:8081/test/hello-world/sdf`
 let getAllTasks = async () => {
     let tasks ;
      try {
-
          tasks = await axiosClient.get(GET_ALL_TASKS_BY_USER_URL);
-         //wrong url
-         if(tasks.status === 200) {
-             console.log("It works!");
-             tasks = tasks.data;
-         }
-     }catch (e) {
-         throw "Failed to fetch the tasks for this user " + e;
+     }catch (error) {
+        tasks = error;
      }
      return tasks;
 }
@@ -35,5 +28,5 @@ let doSomeTesting = async () => {
     }
     return tasks;
 }
-export {getAllTasks}
-export {doSomeTesting}
+export { doSomeTesting, getAllTasks };
+

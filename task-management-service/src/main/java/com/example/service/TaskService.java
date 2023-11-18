@@ -12,7 +12,7 @@ import java.util.List;
 public interface TaskService {
 //    TaskResponse createTask(TaskRequest taskRequest);
 
-    TaskResponse createTask(User owner, TaskRequest taskRequest);
+    TaskResponse createTask(User owner, TaskRequest taskRequest) throws Exception;
 
     TaskResponse getTaskById(long taskId);
 

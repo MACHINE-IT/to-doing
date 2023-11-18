@@ -1,6 +1,5 @@
 import MuiAppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
 import { styled, useTheme } from '@mui/material/styles';
@@ -89,94 +88,9 @@ export default function PersistentMiniSideBar() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      {/* <AppBar position="fixed" open={open}>
-        <Toolbar sx={{display:'flex', justifyContent: 'space-between'}}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography sx={{flexGrow:6, justifySelf: 'flex-start'}} variant="h6" noWrap component="div">
-            Mini variant drawer
-          </Typography>
-          <Box sx={{flexGrow:1}}>
-          <IconButton color='inherit'>
-                <Notifications />
-            </IconButton>
-            <IconButton  color='inherit'>
-                <AccountCircle />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar> */}
+    <>
       <Navbar open={open} handleDrawerOpen={handleDrawerOpen} 
       handleDrawerClose={handleDrawerClose} />
-      {/* <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer> */}
       <Box component="main" sx={{ flexGrow: 1, p: 3, backgroundColor: 'grey'}}>
         <DrawerHeader />
         <Typography paragraph>
@@ -186,6 +100,7 @@ export default function PersistentMiniSideBar() {
             task table
         </Typography>
       </Box>
-    </Box>
+    {/* </Box> */}
+    </>
   );
 }

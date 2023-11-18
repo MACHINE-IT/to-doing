@@ -11,6 +11,8 @@ import com.example.service.TaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,24 +37,31 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Override
-    public TaskResponse createTask(User owner, TaskRequest taskRequest) {
+    public TaskResponse createTask(User owner, TaskRequest taskRequest) throws Exception {
         taskRequest.setCategory(Category.valueOf(taskRequest.getCategory().toString()));
-        Task task = modelMapper.map(taskRequest, Task.class);
-        task.setOwnerId(owner);
-        task.setId(null);
-        task.setCreatedAt(LocalDateTime.now());
-        Task savedTask = taskRepository.save(task);
-        return modelMapper.map(savedTask, TaskResponse.class);
+        LocalDateTime dueDate = taskRequest.getDueDate();
+        if(dueDate.isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("due date cannot set in past");
+        } else {
+            Task task = modelMapper.map(taskRequest, Task.class);
+            task.setOwnerId(owner);
+            task.setId(null);
+            task.setCreationDate(LocalDateTime.now());
+            Task savedTask = taskRepository.save(task);
+            return modelMapper.map(savedTask, TaskResponse.class);
+        }
     }
 
 
     @Override
+    @Cacheable(value = "taskResponses", key = "#taskId")
     public TaskResponse getTaskById(long taskId) {
         Task task = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchElementException("no task found with " + taskId));
         return modelMapper.map(task, TaskResponse.class);
     }
 
     @Override
+    @CacheEvict(value = "taskResponses", key = "#taskUpdateRequest.getId()") // Assuming TaskResponse has a userId field
     public TaskResponse updateTask(TaskUpdateRequest taskUpdateRequest) {
         if(taskRepository.findById(taskUpdateRequest.getId()).isEmpty()) {
             throw new NoSuchElementException("No task found with given task id");
@@ -64,6 +73,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @CacheEvict(value = "tasks", key = "{#userId, #pageable.pageNumber, #pageable.pageSize}")
     public void deleteTask(long taskId) {
         if(!taskRepository.existsById(taskId)) {
             throw new NoSuchElementException("task with given id does not exist");

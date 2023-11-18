@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+
+import java.io.Serializable;
 import java.util.Set;
 
 import java.time.LocalDateTime;
@@ -15,7 +17,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Task {
+public class Task implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -26,8 +28,16 @@ public class Task {
 
     private String description;
 
+    @CreatedDate
+    private LocalDateTime creationDate;
+
     private LocalDateTime dueDate;
-    private Priority priority;
+
+    private LocalDateTime completionDate;
+
+    private boolean isImportant;
+
+    private TaskStatus taskStatus;
 
     @Column(nullable = false)
     private Category category;
@@ -36,8 +46,6 @@ public class Task {
     @JoinColumn(name = "owner_id")
     private User ownerId;
 
-    @CreatedDate
-    private LocalDateTime createdAt;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -46,4 +54,7 @@ public class Task {
             inverseJoinColumns = @JoinColumn(name = "task_id")
     )
     private Set<User> taskMembers;
+
+    @Column(name = "reminder")
+    private LocalDateTime reminder;
 }

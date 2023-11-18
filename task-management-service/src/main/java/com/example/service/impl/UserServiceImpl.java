@@ -1,6 +1,8 @@
 package com.example.service.impl;
 
+import com.example.model.Category;
 import com.example.model.Task;
+import com.example.model.TaskStatus;
 import com.example.model.User;
 import com.example.repository.TaskRepository;
 import com.example.repository.UserRepository;
@@ -12,14 +14,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,6 +46,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Cacheable(value = "tasks", key = "{#userId, #pageableRequest.pageNumber, #pageableRequest.pageSize}")
     public List<TaskResponse> getAllTasks(long userId, Pageable pageableRequest) {
 
         Optional<User> user = userRepository.findById(userId);
@@ -58,7 +61,46 @@ public class UserServiceImpl implements UserService {
                         .category(task.getCategory())
                         .description(task.getDescription())
                         .dueDate(task.getDueDate())
-                        .priority(task.getPriority())
+                        .taskStatus(task.getTaskStatus())
+                        .completionDate(task.getCompletionDate())
+                        .reminder(task.getReminder())
+//                        .priority(task.getPriority())
+                        .build())
+                .toList();
+        for(Task task: listOfTasks) {
+            taskResponseList.forEach(taskResponse -> {
+                List<String> usernamesList = task.getTaskMembers().stream().map(User::getUsername).toList();
+                taskResponse.setMembers(usernamesList);
+            });
+        }
+        return taskResponseList;
+    }
+
+    @Override
+    @Cacheable(value = "filteredTasks", key = "{#userId, #statuses, #categories, #pageableRequest.pageNumber, #pageableRequest.pageSize}")
+    public List<TaskResponse> getAllTasksWithFiltersApplied(long userId, List<TaskStatus> statuses, List<Category> categories, Pageable pageableRequest) {
+        Optional<User> user = userRepository.findById(userId);
+        if(user.isEmpty()) {
+            throw new RuntimeException("No user found");
+        }
+
+//        Page<Task> listOfTasks = taskRepository.findByOptionalCriteria(user.get(), statuses, categories, pageableRequest);
+        Page<Task> byOwnerIdAndTaskStatus = taskRepository.findByOwnerIdAndTaskStatus(user.get(), statuses, pageableRequest);
+        Page<Task> byOwnerIdAndCategory = taskRepository.findByOwnerIdAndCategory(user.get(), categories, pageableRequest);
+        Set<Task> listOfTasks = new HashSet<>();
+        listOfTasks.addAll(byOwnerIdAndTaskStatus.getContent());
+        listOfTasks.addAll(byOwnerIdAndCategory.getContent());
+        List<TaskResponse> taskResponseList = listOfTasks.stream()
+                .map((task) -> TaskResponse.builder()
+                        .id(task.getId())
+                        .title(task.getTitle())
+                        .category(task.getCategory())
+                        .description(task.getDescription())
+                        .dueDate(task.getDueDate())
+                        .taskStatus(task.getTaskStatus())
+                        .completionDate(task.getCompletionDate())
+                        .reminder(task.getReminder())
+//                        .priority(task.getPriority())
                         .build())
                 .toList();
         for(Task task: listOfTasks) {

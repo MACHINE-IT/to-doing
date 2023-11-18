@@ -30,4 +30,7 @@ spring:
     username: sandeepgfgjava@gmail.com
   main:
     banner-mode: off
-
+  data:
+    redis:
+      host: localhost
+      port: 6379

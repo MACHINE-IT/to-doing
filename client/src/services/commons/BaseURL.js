@@ -8,10 +8,11 @@ const port = 8081;
 const BaseURL = `${protocol}://${hostName}:${port}/api`
 const axiosClient = axios.create({
     baseURL: BaseURL,
+    withCredentials: true,
     timeout: 80000,
 })
 
 
-export {axiosClient};
+export { axiosClient };
 
 export default BaseURL;

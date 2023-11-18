@@ -54,7 +54,12 @@ public class TaskServiceTest {
                 .ownerId(user.get())
                 .build();
 
-        TaskResponse taskResponse = taskService.createTask( user.get(),taskRequest);
+        TaskResponse taskResponse = null;
+        try {
+            taskResponse = taskService.createTask( user.get(),taskRequest);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         Assertions.assertEquals(taskResponse.getTitle(),taskRequest.getTitle());
     }
 

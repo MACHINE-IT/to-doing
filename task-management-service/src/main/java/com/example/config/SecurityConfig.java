@@ -2,6 +2,7 @@ package com.example.config;
 
 import com.example.exceptions.JwtAuthenticationException;
 import com.example.filters.JwtAuthorizationFilter;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +26,6 @@ import java.util.List;
 public class SecurityConfig {
 
     private final String[] allowedUrls = {"/api/auth/**", "/test/**",
-//            "/app/**", "/topic/**",
             "/v3/api-docs/**", "/swagger-ui/**",
             "/task-management-sockets/**"
     };
@@ -43,7 +43,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain config(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-//                .cors(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests((authorize) -> {
@@ -58,17 +58,23 @@ public class SecurityConfig {
                 .build();
     }
 
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
-//        configuration.setAllowedMethods(List.of("*"));
-//        configuration.setAllowedHeaders(List.of("*"));
-//        configuration.setAllowCredentials(true);
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedMethods(List.of("HEAD",
+                "GET", "POST", "PUT", "DELETE", "PATCH"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

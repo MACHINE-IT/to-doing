@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.io.Serializable;
 import java.util.List;
 
 import java.util.Collection;
@@ -16,7 +18,7 @@ import java.util.Set;
 @Data
 @Builder
 @Table(name = "task_user")
-public class User implements UserDetails {
+public class User implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

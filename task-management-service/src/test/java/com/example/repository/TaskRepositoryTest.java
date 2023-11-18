@@ -1,9 +1,6 @@
 package com.example.repository;
 
-import com.example.model.Category;
-import com.example.model.Priority;
-import com.example.model.Task;
-import com.example.model.User;
+import com.example.model.*;
 import com.example.taskmanagementservice.TaskManagementServiceApplication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,15 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ContextConfiguration(classes = TaskManagementServiceApplication.class)
@@ -41,7 +38,7 @@ public class TaskRepositoryTest {
                 .title("cooking")
                 .description("I want to cook before 2pm")
                 .category(Category.PERSONAL)
-                .priority(Priority.HIGH)
+//                .priority(Priority.HIGH)
                 .ownerId(null) // to be changed
                 .build();
 
@@ -62,7 +59,7 @@ public class TaskRepositoryTest {
                 .title("test")
                 .description("just testing")
                 .category(Category.PERSONAL)
-                .priority(Priority.HIGH)
+//                .priority(Priority.HIGH)
                 .build();
 
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> taskRepository.save(task));
@@ -77,4 +74,7 @@ public class TaskRepositoryTest {
         System.out.println(listOfTasks);
         Assertions.assertTrue(listOfTasks.stream().count() > 0);
     }
+
+
 }
+

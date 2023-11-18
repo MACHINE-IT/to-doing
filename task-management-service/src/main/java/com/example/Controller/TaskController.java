@@ -28,7 +28,7 @@ public class TaskController {
     }
 
     @PostMapping(RestEndpoints.CREATE_TASK)
-    public ResponseEntity<?> createTask(@RequestBody @Valid TaskRequest taskRequest, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<?> createTask(@RequestBody @Valid TaskRequest taskRequest, HttpServletRequest httpServletRequest) throws Exception {
         User owner = userService.getUserIdByToken(httpServletRequest);
         TaskResponse taskResponse = taskService.createTask(owner, taskRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(taskResponse);

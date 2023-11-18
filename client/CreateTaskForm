@@ -1,0 +1,41 @@
+import React from "react";
+
+    function CreateTaskForm({handleClick}) {
+      return (<Paper sx={{
+  display: 'flex',
+  flexDirection: 'row',
+  position: 'fixed',
+  bottom: 15,
+  width: "70%"
+}}>
+                        <Box flex={.5} sx={{
+    background: 'none',
+    border: 'none'
+  }}>
+                            <IconButton disableRipple>
+                                <BsPlusLg></BsPlusLg>
+                            </IconButton>
+                        </Box>
+                        <Box flex={9} sx={{
+    background: 'none'
+  }} display='flex' flexDirection='row'>
+                            <Input placeholder="Add tasks" sx={{
+      border: "none",
+      boxShadow: 'none'
+    }}>
+                            </Input>
+                            <IconButton fontSize="14px">
+                                Add
+                            </IconButton>
+                        </Box>
+                        <Box>
+                            <IconButton onClick={handleClick}>
+                                <SlCalender></SlCalender>
+                            </IconButton>
+                            <IconButton><GiAlarmClock></GiAlarmClock></IconButton>
+                            <IconButton><MdOutlineEventRepeat></MdOutlineEventRepeat></IconButton>
+                        </Box>
+                    </Paper>);
+    }
+  
+  

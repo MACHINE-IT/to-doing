@@ -6,6 +6,7 @@ import com.example.utils.JwtService;
 import com.example.utils.TokenBlacklistService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
@@ -19,9 +20,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
+
+    private final String[] allowedUrls = {"/api/auth/.*", "/test/.*",
+            "/v3/api-docs/.*", "/swagger-ui/.*",
+            "/task-management-sockets/.*"
+    };
 
     Logger logger = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
 
@@ -37,6 +44,17 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         this.jwtService = jwtService;
         this.jwtAuthenticationProvider = jwtAuthenticationProvider;
         this.tokenBlacklistService = tokenBlacklistService;
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getServletPath();
+        for(String allowedPath: allowedUrls) {
+            if(path.matches(allowedPath)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -68,12 +86,16 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private String extractToken(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
+        Cookie httpCookie = Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("jwt"))
+                .findAny().orElse(null);
         String token;
-        if(header == null) {
+        if(header == null && httpCookie == null) {
             return null;
         }
-        if(header.startsWith("Bearer ")) {
+        if(header != null && header.startsWith("Bearer ")) {
             token = header.substring(7);
+        } else if(httpCookie != null) {
+            token = httpCookie.getValue();
         } else {
             token = header;
         }
