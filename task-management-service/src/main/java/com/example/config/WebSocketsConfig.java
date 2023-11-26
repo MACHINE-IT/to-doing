@@ -3,16 +3,9 @@ package com.example.config;
 import com.example.filters.JwtAuthorizationFilter;
 import com.example.filters.WebSocketsAuthenticationInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.messaging.simp.config.ChannelRegistration;
-import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.security.authorization.AuthorizationManager;
-import org.springframework.security.config.annotation.web.socket.EnableWebSocketSecurity;
-import org.springframework.security.messaging.access.intercept.MessageMatcherDelegatingAuthorizationManager;
-import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
@@ -20,10 +13,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 //@EnableWebSocketSecurity
 @EnableWebSocketMessageBroker
 public class WebSocketsConfig implements WebSocketMessageBrokerConfigurer {
-
-
     String QUEUE_NAME = "ws-queue";
-
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
     private final WebSocketsAuthenticationInterceptor webSocketsAuthenticationInterceptor;

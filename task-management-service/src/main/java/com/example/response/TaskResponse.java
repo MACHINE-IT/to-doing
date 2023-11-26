@@ -1,9 +1,6 @@
 package com.example.response;
 
-import com.example.model.Category;
-import com.example.model.Priority;
-import com.example.model.TaskStatus;
-import com.example.model.User;
+import com.example.model.*;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -20,15 +17,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 public class TaskResponse implements Serializable {
     private Long id;
     private String title;
     private String description;
     private LocalDateTime dueDate;
 
-    private Category category;
-    private List<String> members;
+    private CategoryTable category;
 
     private LocalDateTime creationDate;
 
@@ -38,5 +33,5 @@ public class TaskResponse implements Serializable {
 
     private TaskStatus taskStatus = TaskStatus.PENDING;
 
-    private LocalDateTime reminder;
+    private List<Reminder> reminders;
 }

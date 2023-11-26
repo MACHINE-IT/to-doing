@@ -9,6 +9,8 @@ spring:
     url: jdbc:mysql://localhost:3306/task_master
     username: root
     password: your_password
+    hikari:
+      maximum-pool-size: 10
 
   jpa:
     show-sql: true

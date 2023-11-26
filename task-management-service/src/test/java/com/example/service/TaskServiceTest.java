@@ -49,7 +49,7 @@ public class TaskServiceTest {
                 .title("OOPs topic")
                 .description("do a OOPS revision 6pm")
                 .category(Category.PERSONAL)
-                .priority(Priority.MEDIUM)
+//                .priority(Priority.MEDIUM)
                 .dueDate(dueDate)
                 .ownerId(user.get())
                 .build();

@@ -1,5 +1,4 @@
 package com.example.Controller;
 
-public class ReminderController {
-
+public class AdminController {
 }

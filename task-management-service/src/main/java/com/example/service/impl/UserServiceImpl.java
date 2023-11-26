@@ -46,14 +46,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Cacheable(value = "tasks", key = "{#userId, #pageableRequest.pageNumber, #pageableRequest.pageSize}")
+//    @Cacheable(value = "tasks", key = "{#userId, #pageableRequest.pageNumber, #pageableRequest.pageSize}")
     public List<TaskResponse> getAllTasks(long userId, Pageable pageableRequest) {
 
         Optional<User> user = userRepository.findById(userId);
         if(user.isEmpty()) {
             throw new RuntimeException("No user found");
         }
-        Page<Task> listOfTasks = taskRepository.findByOwnerId(user.get(), pageableRequest);
+        Page<Task> listOfTasks = taskRepository.findByOwnerId(userId, pageableRequest);
         List<TaskResponse> taskResponseList = listOfTasks.stream()
                 .map((task) -> TaskResponse.builder()
                         .id(task.getId())
@@ -63,21 +63,21 @@ public class UserServiceImpl implements UserService {
                         .dueDate(task.getDueDate())
                         .taskStatus(task.getTaskStatus())
                         .completionDate(task.getCompletionDate())
-                        .reminder(task.getReminder())
+                        .reminders(task.getReminders())
 //                        .priority(task.getPriority())
                         .build())
                 .toList();
         for(Task task: listOfTasks) {
             taskResponseList.forEach(taskResponse -> {
-                List<String> usernamesList = task.getTaskMembers().stream().map(User::getUsername).toList();
-                taskResponse.setMembers(usernamesList);
+                List<String> usernamesList = task.getSharedWithUsers().stream().map(User::getUsername).toList();
+//                taskResponse.setMembers(usernamesList);
             });
         }
         return taskResponseList;
     }
 
     @Override
-    @Cacheable(value = "filteredTasks", key = "{#userId, #statuses, #categories, #pageableRequest.pageNumber, #pageableRequest.pageSize}")
+//    @Cacheable(value = "filteredTasks", key = "{#userId, #statuses, #categories, #pageableRequest.pageNumber, #pageableRequest.pageSize}")
     public List<TaskResponse> getAllTasksWithFiltersApplied(long userId, List<TaskStatus> statuses, List<Category> categories, Pageable pageableRequest) {
         Optional<User> user = userRepository.findById(userId);
         if(user.isEmpty()) {
@@ -85,8 +85,8 @@ public class UserServiceImpl implements UserService {
         }
 
 //        Page<Task> listOfTasks = taskRepository.findByOptionalCriteria(user.get(), statuses, categories, pageableRequest);
-        Page<Task> byOwnerIdAndTaskStatus = taskRepository.findByOwnerIdAndTaskStatus(user.get(), statuses, pageableRequest);
-        Page<Task> byOwnerIdAndCategory = taskRepository.findByOwnerIdAndCategory(user.get(), categories, pageableRequest);
+        Page<Task> byOwnerIdAndTaskStatus = taskRepository.findByOwnerIdAndTaskStatus(userId, statuses, pageableRequest);
+        Page<Task> byOwnerIdAndCategory = taskRepository.findByOwnerIdAndCategory(userId, categories, pageableRequest);
         Set<Task> listOfTasks = new HashSet<>();
         listOfTasks.addAll(byOwnerIdAndTaskStatus.getContent());
         listOfTasks.addAll(byOwnerIdAndCategory.getContent());
@@ -99,14 +99,15 @@ public class UserServiceImpl implements UserService {
                         .dueDate(task.getDueDate())
                         .taskStatus(task.getTaskStatus())
                         .completionDate(task.getCompletionDate())
-                        .reminder(task.getReminder())
+                        .reminders(task.getReminders())
+
 //                        .priority(task.getPriority())
                         .build())
                 .toList();
         for(Task task: listOfTasks) {
             taskResponseList.forEach(taskResponse -> {
-                List<String> usernamesList = task.getTaskMembers().stream().map(User::getUsername).toList();
-                taskResponse.setMembers(usernamesList);
+                List<String> usernamesList = task.getSharedWithUsers().stream().map(User::getUsername).toList();
+//                taskResponse.setMembers(usernamesList);
             });
         }
         return taskResponseList;

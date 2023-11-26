@@ -2,29 +2,50 @@ package com.example.config;
 
 public final class RestEndpoints {
 
-    public static final String TASKS = "/api/tasks";
-    public static final String USER = "/api/users";
+    // Authentication and User Management Endpoints
     public static final String AUTH = "/api/auth";
-    public static final String CREATE_TASK = "";
-    public static final String DELETE_TASK = "/{taskId}";
-    public static final String UPDATE_TASK = "/{taskId}";
-    public static final String GET_TASK_FOR_AUTHENTICATED_USER = "/tasks";
-    public static final String GET_TASK_BY_TASKID = "/{taskId}";
+    public static final String USER = "/api/users";
     public static final String SIGN_IN = "/sign-in";
     public static final String REGISTER = "/register";
     public static final String FORGOT_PASSWORD = "/forgot-password";
-
+    public static final String RESET_PASSWORD = "/reset-password/*";
     public static final String SIGN_OUT = "/sign-out";
 
-    public static final String RESET_PASSWORD = "/reset-password/*";
+    // User Profile Endpoints
+    public static final String GET_PROFILE_BY_USER_ID = ""; // Add path here
+    public static final String UPDATE_PROFILE_USER_ID = ""; // Add path here
 
-    public static final String GET_PROFILE_BY_USER_ID = "";
+    // Task Management Endpoints
+    public static final String TASKS = "/api/tasks";
+    public static final String CREATE_TASK = ""; // Assuming POST method is used
+    public static final String GET_TASK_FOR_AUTHENTICATED_USER = "/tasks";
+    public static final String GET_TASK_BY_TASKID = "/{taskId}";
+    public static final String UPDATE_TASK = "/{taskId}";
+    public static final String DELETE_TASK = "/{taskId}";
 
-    public static final String UPDATE_PROFILE_USER_ID = "";
+    public static final String SET_REMINDER = "/{taskId}/reminder";
+    public static final String GET_REMINDERS = "/{taskId}/reminder";
+    public static final String UPDATE_REMINDER = "/{taskId}/reminder";
+    public static final String DELETE_REMINDER = "/{taskId}/reminders/{reminderId}";
+    public static final String SHARE_THE_TASK = "/{taskId}/share";
 
-    public static final String SHARE_THE_TASK = "/share/tasks"; // -> only owner can invite others
-    public static final String SHARE_THE_PROJECT = "/share/projects"; // -> only owner can invite others
+    public static final String UNSHARE_THE_TASK = "/{taskId}/unshare";
+    public static final String ASSIGN_TASK_TO_USER = "/{taskId}/assign";
 
+    public static final String ADD_CATEGORY_FROM_TASK =  "/{taskId}/categories/{categoryId}";
+    public static final String REMOVE_CATEGORY_FROM_TASK = ADD_CATEGORY_FROM_TASK;
+
+    // Category Management Endpoints
+    public static final String BASE_CATEGORY_API = "/api/categories";
+    public static final String CREATE_CATEGORY = BASE_CATEGORY_API;
+    public static final String GET_ALL_CATEGORIES = BASE_CATEGORY_API;
+    public static final String UPDATE_CATEGORY =  "/{categoryId}";
+    public static final String DELETE_CATEGORY =  "/{categoryId}";
+
+    // Task Sharing Endpoints
+  // -> only owner can invite others
+
+    // ... any additional groups or endpoints ...
 }
 
 /*

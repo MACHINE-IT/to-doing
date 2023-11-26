@@ -17,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Data
 @Builder
-@Table(name = "task_user")
+@Table(name = "user")
 public class User implements UserDetails, Serializable {
 
     @Id
@@ -39,14 +39,24 @@ public class User implements UserDetails, Serializable {
     @Column(nullable = false)
     private String password;
 
-    @ManyToMany(mappedBy = "taskMembers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Task> taskList;
+    @OneToMany(mappedBy = "owner")
+    private List<Task> ownTasks;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            name = "shared_tasks",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id")
+    )    private Set<Task> sharedTasks;
 
     @OneToOne(mappedBy = "userId")
     private Profile profile;
 
-    @ManyToMany(mappedBy = "projectMembers", fetch = FetchType.LAZY)
-    private Set<Project> projects;
+//    @ManyToMany(mappedBy = "projectMembers", fetch = FetchType.LAZY)
+//    private Set<Project> projects;
+
+    @ManyToMany(mappedBy = "assignedToUsers")
+    private Set<Task> assignedTo;
 
     @OneToMany(mappedBy = "user")
     private List<UserNotificationPreferences> notificationPreferences;

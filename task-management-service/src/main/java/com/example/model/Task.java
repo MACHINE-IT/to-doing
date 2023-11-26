@@ -1,19 +1,19 @@
 package com.example.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.util.Lazy;
 
 import java.io.Serializable;
 import java.util.Set;
 
 import java.time.LocalDateTime;
-
+import java.util.List;
 @Entity
 @Builder
+@Getter
+@Setter
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,22 +39,32 @@ public class Task implements Serializable {
 
     private TaskStatus taskStatus;
 
-    @Column(nullable = false)
-    private Category category;
-
     @ManyToOne()
+    private CategoryTable category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
-    private User ownerId;
+    private User owner;
 
-
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "shared_tasks",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "task_id")
+            joinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId")
     )
-    private Set<User> taskMembers;
+    private Set<User> sharedWithUsers;
 
-    @Column(name = "reminder")
-    private LocalDateTime reminder;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "task_assignments",
+     joinColumns = @JoinColumn(name = "task_id"),
+     inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> assignedToUsers;
+
+    @OneToMany
+    private List<Attachment> attachments;
+
+    @OneToMany(mappedBy = "task", fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reminder> reminders;
+
 }

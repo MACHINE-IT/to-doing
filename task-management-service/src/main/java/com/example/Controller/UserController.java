@@ -2,11 +2,8 @@ package com.example.Controller;
 
 import com.example.config.RestEndpoints;
 import com.example.model.Category;
-import com.example.model.Task;
 import com.example.model.TaskStatus;
-import com.example.model.User;
 import com.example.repository.TaskRepository;
-import com.example.request.TaskShareRequest;
 import com.example.response.TaskResponse;
 import com.example.service.SharedTaskService;
 import com.example.service.UserService;
@@ -72,17 +69,6 @@ public class UserController {
     }
 
 
-    @PutMapping(RestEndpoints.SHARE_THE_TASK)
-    public ResponseEntity<?> shareTheTask(@RequestBody TaskShareRequest taskShareRequest,
-                                          HttpServletRequest request) throws IllegalAccessException {
-        User userId = userService.getUserIdByToken(request);
-        long taskId = taskShareRequest.getTaskId();
-        Task task = taskRepository.findById(taskId).orElseThrow(() -> new NoSuchElementException("No task found with " + taskId));
-        if (!task.getOwnerId().getUserId().equals(userId.getUserId())) {
-            throw new IllegalAccessException("Only owner of the taskId: " + taskId + " can share.");
-        }
-        sharedTaskService.share(taskShareRequest);
-        return null;
-    }
+
 
 }

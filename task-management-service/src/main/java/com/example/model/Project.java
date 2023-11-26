@@ -24,6 +24,6 @@ public class Project {
     )
     private Set<User> projectMembers;
 
-    @OneToMany(mappedBy = "projectId")
-    private List<Comment> comment;
+//    @OneToMany(mappedBy = "")
+//    private List<Comment> comment;
 }
